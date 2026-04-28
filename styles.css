@@ -111,3 +111,7 @@ p.lead { color: var(--ink); font-size: 19px; }
   .throughline .arrow { display: none; }
 }
 .hero .rule { margin: 32px 0 24px; }
+
+/* === Framing === */
+.framing h2 { font-style: italic; }
+.framing .wayfinder { margin-top: 36px; color: var(--warm-grey); }
