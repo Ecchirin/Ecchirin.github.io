@@ -132,3 +132,31 @@ p.lead { color: var(--ink); font-size: 19px; }
 .timeline-role { margin: 0 0 6px; color: var(--ink); font-size: 17px; }
 .timeline-role strong { font-weight: 700; }
 .timeline-outcome { margin: 0; color: var(--ink-2); font-size: 15px; line-height: 1.65; }
+
+/* === Notable work === */
+.notable h2 { font-style: italic; }
+.notable-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+}
+.notable-grid li {
+  padding-top: 20px;
+  border-top: 1px solid var(--hairline);
+}
+.notable-grid h3 {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+.notable-grid p { font-size: 15px; line-height: 1.65; margin: 0; }
+@media (min-width: 720px) {
+  .notable-grid { grid-template-columns: 1fr 1fr; gap: 32px 36px; }
+}
