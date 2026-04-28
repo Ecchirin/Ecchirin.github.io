@@ -200,3 +200,48 @@ p.lead { color: var(--ink); font-size: 19px; }
 .site-footer a { color: var(--warm-grey); }
 .site-footer a:hover { color: var(--rust); }
 .site-footer .dot { color: var(--hairline); }
+
+/* === Case study === */
+.case-study .label { margin-bottom: 18px; }
+.case-study h2 {
+  font-size: clamp(24px, 4vw, 30px);
+  font-style: italic;
+  margin-bottom: 32px;
+}
+.case-study h3 {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--warm-grey);
+  margin: 36px 0 12px;
+}
+.case-study p { font-size: 17px; line-height: 1.75; }
+
+/* === Stat callout === */
+.stat-callout {
+  background: var(--paper-warm);
+  border-left: 3px solid var(--rust);
+  padding: 18px 22px;
+  margin: 36px 0;
+  font-family: var(--sans);
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+.stat-callout strong { color: var(--ink); font-weight: 700; }
+
+/* === Pull quote === */
+.pull-quote {
+  margin: 40px 0;
+  padding: 0 0 0 24px;
+  border-left: 2px solid var(--rust);
+  font-size: 22px;
+  line-height: 1.45;
+  font-style: italic;
+  color: var(--ink);
+  font-family: var(--serif);
+}
+.pull-quote em { font-style: normal; color: var(--rust); }

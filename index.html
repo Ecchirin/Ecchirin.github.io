@@ -47,7 +47,67 @@
         Three projects &nbsp;·&nbsp; ~5 minutes
       </p>
     </section>
-    <!-- 3. Case Study 1: Token Conversion -->
+<article class="case-study" id="cs-token-conversion" aria-labelledby="cs1-title">
+  <p class="label">Case study 01 &nbsp;·&nbsp; Affyn &nbsp;·&nbsp; 2022</p>
+  <h2 id="cs1-title">A bridge between a centralised game economy and a decentralised token.</h2>
+
+  <h3>Problem</h3>
+  <p>
+    Affyn ran a virtual in-game currency that players earned through gameplay.
+    The token, on a public blockchain, was the financial layer. We needed to let
+    players convert one into the other &mdash; safely, predictably, and at scale,
+    across two systems with very different consistency models. The game server
+    is a fast, mutable, centralised database. The blockchain is slow, immutable,
+    and finalised by consensus. They disagree about what "now" means.
+  </p>
+
+  <h3>Approach</h3>
+  <p>
+    The conversion contract held the entire bridge in a single state machine
+    with explicit phases: <em>locked, requested, confirmed, settled</em>. Players
+    initiated a conversion against a balance that was atomically locked on the
+    game side; the contract minted only after a confirmation window had passed
+    and a reconciliation job had verified that the game database, the request
+    log, and the onchain event stream all agreed on the amount. Roles were tightly
+    scoped &mdash; the minter key could only mint, never withdraw; admin operations
+    moved through a Gnosis Safe multisig.
+  </p>
+  <p>
+    Daily minting caps acted as a circuit breaker. If anomalous volume tripped
+    the threshold &mdash; player exploit, server bug, anything &mdash; the contract
+    paused and escalated to manual review before a single token left the door.
+  </p>
+
+  <aside class="stat-callout">
+    <strong>CertiK-cleared.</strong> Double-spend prevention. Daily circuit breakers.
+    Zero post-launch incidents on the conversion path.
+  </aside>
+
+  <h3>What was hard</h3>
+  <p>
+    Distributed consistency under partial failure. The game server can crash
+    mid-conversion. The blockchain can reorg shallow blocks. The reconciliation
+    job can be late. Each combination needed a defined recovery path that didn't
+    leak tokens, double-mint, or leave a player stuck. The eventual design
+    treated every conversion as idempotent against a unique request ID and
+    settled in only one direction &mdash; if anything looked wrong, refund and roll back
+    on the game side, never mint to "fix" it.
+  </p>
+
+  <blockquote class="pull-quote">
+    Every state had to survive the question:
+    <em>"What if this is the only message that gets through?"</em>
+  </blockquote>
+
+  <h3>Reflection</h3>
+  <p>
+    If I built it again I'd make the reconciliation job push state instead of pull
+    &mdash; have the game server emit confirmations onchain rather than the contract
+    asking the game server "did this happen?". Same guarantees, less coupling, and
+    no hidden assumption that the game side is always reachable when the chain wants
+    an answer.
+  </p>
+</article>
     <!-- 4. Case Study 2: 9.8B Pipeline -->
     <!-- 5. Case Study 3: C++ Game Server -->
     <section class="timeline" aria-labelledby="timeline-heading">
