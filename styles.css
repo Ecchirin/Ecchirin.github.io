@@ -84,3 +84,30 @@ p.lead { color: var(--ink); font-size: 19px; }
     transition-duration: 0.01ms !important;
   }
 }
+
+/* === Hero === */
+.hero { padding-top: clamp(96px, 14vw, 140px); }
+.hero .label { margin-bottom: 24px; }
+.hero-headline {
+  font-size: clamp(28px, 5vw, 36px);
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  font-weight: 400;
+}
+.throughline {
+  list-style: none; padding: 0; margin: 28px 0 0;
+  display: flex; flex-wrap: wrap; gap: 0 14px;
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  font-weight: 500;
+}
+.throughline li { padding: 6px 0; }
+.throughline .arrow { color: var(--rust); padding: 6px 6px; }
+@media (max-width: 599px) {
+  .throughline { flex-direction: column; gap: 6px 0; }
+  .throughline .arrow { display: none; }
+}
+.hero .rule { margin: 32px 0 24px; }
