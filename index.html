@@ -108,7 +108,64 @@
     an answer.
   </p>
 </article>
-    <!-- 4. Case Study 2: 9.8B Pipeline -->
+<article class="case-study" id="cs-pipeline" aria-labelledby="cs2-title">
+  <p class="label">Case study 02 &nbsp;·&nbsp; Affyn &nbsp;·&nbsp; 2022</p>
+  <h2 id="cs2-title">9.8 billion NFT metadata entries, indexed by geography.</h2>
+
+  <h3>Problem</h3>
+  <p>
+    The product needed an NFT for every Uber H3 hexagonal cell on the planet at
+    a fine resolution &mdash; nearly ten billion entries, each with rich metadata,
+    each individually queryable by location. A naive document store would have
+    eaten storage in volumes that would have made the unit economics unworkable.
+    We needed the same data, accessible the same way, in a fraction of the space.
+  </p>
+
+  <h3>Approach</h3>
+  <p>
+    Three things did most of the work. First, aggressive MongoDB schema
+    compression: every field name shrunk to one or two characters, every enum
+    encoded as a small integer, every default omitted from the document. Single
+    documents that would have been 800 bytes naive came in at well under 100.
+  </p>
+  <p>
+    Second, geospatial indexes. H3 cell IDs were stored as the primary key, with
+    secondary indexes on parent cells at coarser resolutions to make hierarchical
+    queries cheap. Looking up "all cells inside this region" was a bounded index
+    scan, not a scan-and-filter.
+  </p>
+  <p>
+    Third, deliberate document layout. Hot fields lived at the front; cold fields
+    were nested. Queries that only needed coordinates and ownership never paid
+    the cost of reading the full document.
+  </p>
+
+  <aside class="stat-callout">
+    <strong>9.8 billion entries.</strong> Roughly an order of magnitude less storage
+    than a naive implementation. Hierarchical geospatial queries in milliseconds.
+  </aside>
+
+  <h3>What was hard</h3>
+  <p>
+    Generating the data was a multi-day pipeline that had to be resumable, idempotent,
+    and verifiable. We couldn't afford to start over if a worker crashed eight hours
+    in. The pipeline ran in shards keyed by H3 parent cell, each shard checkpointed
+    its progress to a durable log, and the orchestrator could pick up exactly where
+    a failed shard left off. Verification was a separate pass that sampled cells at
+    each resolution level and asserted invariants &mdash; if a parent cell claimed
+    seven children, all seven existed; if a region had a population estimate, the
+    sum of its children's estimates matched within tolerance.
+  </p>
+
+  <h3>Reflection</h3>
+  <p>
+    Schema compression is a one-way door. Once you're three months in and tooling
+    has been written against single-character field names, you can't widen them
+    without a migration that touches every document. If I started again I'd codify
+    the field-name map in a generated header somewhere both the writer and the
+    reader compile against, so a rename means a build break, not a runtime mystery.
+  </p>
+</article>
     <!-- 5. Case Study 3: C++ Game Server -->
     <section class="timeline" aria-labelledby="timeline-heading">
       <h2 id="timeline-heading">Career, briefly.</h2>
