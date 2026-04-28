@@ -1,0 +1,17 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Defensive — we don't use Node deps in the deployed site,
+# but generate-og.mjs uses npx, so guard against accidental installs
+node_modules/
+package-lock.json
+.npm/
+
+# Local dev
+.cache/
