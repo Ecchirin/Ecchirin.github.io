@@ -142,15 +142,6 @@
     Every state had to survive the question:
     <em>"What if this is the only message that gets through?"</em>
   </blockquote>
-
-  <h3>Reflection</h3>
-  <p>
-    If I built it again I'd make the reconciliation job push state instead of pull
-    &mdash; have the game server emit confirmations onchain rather than the contract
-    asking the game server "did this happen?". Same guarantees, less coupling, and
-    no hidden assumption that the game side is always reachable when the chain wants
-    an answer.
-  </p>
 </article>
 <article class="case-study" id="cs-pipeline" aria-labelledby="cs2-title">
   <p class="label">Case study 02 &nbsp;·&nbsp; Affyn &nbsp;·&nbsp; 2022</p>
@@ -201,14 +192,6 @@
     sum of its children's estimates matched within tolerance.
   </p>
 
-  <h3>Reflection</h3>
-  <p>
-    Schema compression is a one-way door. Once you're three months in and tooling
-    has been written against single-character field names, you can't widen them
-    without a migration that touches every document. If I started again I'd codify
-    the field-name map in a generated header somewhere both the writer and the
-    reader compile against, so a rename means a build break, not a runtime mystery.
-  </p>
 </article>
 <article class="case-study" id="cs-game-server" aria-labelledby="cs3-title">
   <p class="label">Case study 03 &nbsp;·&nbsp; IGG Singapore &nbsp;·&nbsp; 2020&ndash;2022</p>
@@ -261,14 +244,6 @@
     months later a feature reused the helper from a different thread.
   </p>
 
-  <h3>Reflection</h3>
-  <p>
-    A lot of the discipline I bring to smart contracts now &mdash; explicit state machines,
-    minimal shared mutable state, treating every interaction as something that might
-    fail &mdash; came from this period. The blockchain just enforced the discipline more
-    strictly because the cost of getting it wrong was paid in tokens instead of
-    crash dumps.
-  </p>
 </article>
     <section class="timeline" aria-labelledby="timeline-heading">
       <h2 id="timeline-heading">Career, briefly.</h2>
