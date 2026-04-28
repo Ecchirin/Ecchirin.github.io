@@ -245,3 +245,28 @@ p.lead { color: var(--ink); font-size: 19px; }
   font-family: var(--serif);
 }
 .pull-quote em { font-style: normal; color: var(--rust); }
+
+/* === Section reveal === */
+section, article {
+  opacity: 1;
+  transform: none;
+}
+.reveal-prepare section,
+.reveal-prepare article {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 600ms ease-out, transform 600ms ease-out;
+}
+.reveal-prepare section.is-visible,
+.reveal-prepare article.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-prepare section,
+  .reveal-prepare article {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
