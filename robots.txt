@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://Ecchirin.github.io/sitemap.xml
